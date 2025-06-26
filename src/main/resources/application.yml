@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: s3-lambda-file-mover
+  profiles:
+    active: dev
+
+# AWS Configuration
+aws:
+  region: us-east-1
+  s3:
+    source-bucket: ${SOURCE_BUCKET:source-bucket-name}
+    destination-bucket: ${DESTINATION_BUCKET:destination-bucket-name}
+    # Optional: specify a prefix for files to process
+    source-prefix: ${SOURCE_PREFIX:}
+    # Optional: specify a destination prefix
+    destination-prefix: ${DESTINATION_PREFIX:}
+  
+  # Lambda Configuration
+  lambda:
+    function-name: ${LAMBDA_FUNCTION_NAME:s3-file-mover}
+    timeout-seconds: 300
+    memory-size: 512
+
+# Logging Configuration
+logging:
+  level:
+    com.example.s3lambdafilemover: DEBUG
+    software.amazon.awssdk: INFO
+    org.springframework: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# Server Configuration (for local testing)
+server:
+  port: 8080 
